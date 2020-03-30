@@ -109,8 +109,8 @@ public class OverviewActivity extends AppCompatActivity {
 
         LinearLayout llHeader = new LinearLayout(this);
         LinearLayout.LayoutParams llParamsHeader = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
         );
         llHeader.setOrientation(LinearLayout.HORIZONTAL);
         llHeader.setWeightSum(2);

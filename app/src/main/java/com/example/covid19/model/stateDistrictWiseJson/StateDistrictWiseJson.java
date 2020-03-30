@@ -14,6 +14,10 @@ public class StateDistrictWiseJson {
         stateDistrictMap.put(state, districtData);
     }
 
+    public HashMap<String, DistrictData> getStateDistrictMap() {
+        return stateDistrictMap;
+    }
+
     @Override
     public String toString() {
         return "StateDistrictWiseJson{" +

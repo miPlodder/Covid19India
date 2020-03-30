@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.covid19.activity.OverviewActivity;
 import com.example.covid19.model.dataJson.DataJSON;
+import com.example.covid19.model.stateDistrictWiseJson.StateDistrictWiseJson;
 import com.example.covid19.service.Covid19Client;
 import com.example.covid19.service.Covid19Service;
 import com.example.covid19.utility.JsonParserUtility;
@@ -17,6 +18,8 @@ public class OverviewPresenter {
 
     private Covid19Service service = null;
     private OverviewActivity activity;
+    DataJSON dataJSON = null;
+    StateDistrictWiseJson stateDistrictWiseJson = null;
 
     public final static String TAG = OverviewPresenter.class.getClass().getSimpleName();
 
@@ -26,35 +29,44 @@ public class OverviewPresenter {
     }
 
     public void getDataJSON() {
-        Call<DataJSON> response = service.getDataJSON();
-        response.enqueue(new Callback<DataJSON>() {
+        if (dataJSON == null) {
+            Call<DataJSON> response = service.getDataJSON();
 
-            @Override
-            public void onResponse(Call<DataJSON> call, Response<DataJSON> response) {
-                activity.setDataToAdapter(response.body());
-                Log.d(TAG, "onResponse: " + response.body().toString());
-            }
+            response.enqueue(new Callback<DataJSON>() {
 
-            @Override
-            public void onFailure(Call<DataJSON> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.getMessage());
-            }
-        });
+                @Override
+                public void onResponse(Call<DataJSON> call, Response<DataJSON> response) {
+                    dataJSON = response.body();
+                    activity.setDataToAdapter(dataJSON);
+                    Log.d(TAG, "onResponse: " + dataJSON.toString());
+                }
+
+                @Override
+                public void onFailure(Call<DataJSON> call, Throwable t) {
+                    Log.d(TAG, "onFailure: " + t.getMessage());
+                }
+            });
+        }
     }
 
     public void getStateDistrictWiseJSON() {
-        Call<JsonObject> response2 = service.getStateDistrictWiseJSON();
-        response2.enqueue(new Callback<JsonObject>() {
+        if (stateDistrictWiseJson == null) {
+            Call<JsonObject> response = service.getStateDistrictWiseJSON();
+            response.enqueue(new Callback<JsonObject>() {
 
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.d(TAG, "onResponse: " + JsonParserUtility.parseStateDistrictWiseResponse(response.body()));
-            }
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    stateDistrictWiseJson = JsonParserUtility.parseStateDistrictWiseResponse(response.body());
+                    activity.setStateDistrictWiseJson(stateDistrictWiseJson);
+                    Log.d(TAG, "onResponse: " + stateDistrictWiseJson);
+                }
 
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.getMessage());
-            }
-        });
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    Log.d(TAG, "onFailure: " + t.getMessage());
+                }
+            });
+        }
+
     }
 }

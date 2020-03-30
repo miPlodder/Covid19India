@@ -14,6 +14,10 @@ public class DistrictData {
         districtDataMap.put(district, districtData);
     }
 
+    public HashMap<String, Cases> getDistrictDataMap() {
+        return districtDataMap;
+    }
+
     @Override
     public String toString() {
         return "DistrictData{" +

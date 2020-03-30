@@ -1,14 +1,26 @@
 package com.example.covid19.activity;
 
+import android.app.ActionBar;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cleveroad.adaptivetablelayout.AdaptiveTableLayout;
@@ -17,7 +29,11 @@ import com.example.covid19.R;
 import com.example.covid19.adapter.CovidDetailsAdapter;
 import com.example.covid19.adapter.CovidDetailsTableDataSourceImpl;
 import com.example.covid19.model.dataJson.DataJSON;
+import com.example.covid19.model.stateDistrictWiseJson.DistrictData;
+import com.example.covid19.model.stateDistrictWiseJson.StateDistrictWiseJson;
 import com.example.covid19.presenter.OverviewPresenter;
+
+import org.w3c.dom.Text;
 
 public class OverviewActivity extends AppCompatActivity {
 
@@ -26,6 +42,8 @@ public class OverviewActivity extends AppCompatActivity {
     private CovidDetailsAdapter tableAdapter;
     private OverviewPresenter presenter;
     private CovidDetailsTableDataSourceImpl covidDetailsTableDataSource;
+    private DataJSON dataJSON = null;
+    private StateDistrictWiseJson stateDistrictWiseJson = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +54,7 @@ public class OverviewActivity extends AppCompatActivity {
 
         presenter = new OverviewPresenter(this);
         presenter.getDataJSON();
+        presenter.getStateDistrictWiseJSON();
     }
 
     @Override
@@ -44,8 +63,13 @@ public class OverviewActivity extends AppCompatActivity {
         return true;
     }
 
-    public void setDataToAdapter(DataJSON json) {
-        covidDetailsTableDataSource = new CovidDetailsTableDataSourceImpl(json);
+    public void setStateDistrictWiseJson(StateDistrictWiseJson stateDistrictWiseJson) {
+        this.stateDistrictWiseJson = stateDistrictWiseJson;
+    }
+
+    public void setDataToAdapter(DataJSON dataJSON) {
+        this.dataJSON = dataJSON;
+        covidDetailsTableDataSource = new CovidDetailsTableDataSourceImpl(this.dataJSON);
         tableAdapter = new CovidDetailsAdapter(this, covidDetailsTableDataSource);
         tableAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -54,7 +78,11 @@ public class OverviewActivity extends AppCompatActivity {
 
             @Override
             public void onRowHeaderClick(int row) {
-                Toast.makeText(getApplicationContext(), "rowheaderclick", Toast.LENGTH_LONG).show();
+                if (stateDistrictWiseJson != null) {
+                    String state = dataJSON.getStatewiseList().get(row).getState();
+                    DistrictData districtData = stateDistrictWiseJson.getStateDistrictMap().get(state);
+                    showMaterialDialog(districtData);
+                }
             }
 
             @Override
@@ -66,6 +94,152 @@ public class OverviewActivity extends AppCompatActivity {
             }
         });
         tableLayout.setAdapter(tableAdapter);
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    private void showMaterialDialog(DistrictData districtData) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_districy_details, null);
+
+        TableLayout tableLayout = view.findViewById(R.id.tlDistricts);
+        tableLayout.removeAllViews();
+
+        int largeFontSize = (int) getResources().getDimension(R.dimen.large_font);
+        int smallFontSize = (int) getResources().getDimension(R.dimen.small_font);
+
+        LinearLayout llHeader = new LinearLayout(this);
+        LinearLayout.LayoutParams llParamsHeader = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+        );
+        llHeader.setOrientation(LinearLayout.HORIZONTAL);
+        llHeader.setWeightSum(2);
+
+        TextView tvDistrictHeader = new TextView(this);
+        tvDistrictHeader.setLayoutParams(new TableLayout.LayoutParams(0,
+                TableLayout.LayoutParams.WRAP_CONTENT, 1.0f));
+        tvDistrictHeader.setGravity(Gravity.LEFT);
+        tvDistrictHeader.setPadding(5, 15, 0, 15);
+        //tvDistrict.setBackgroundColor(Color.parseColor("#f8f8f8"));
+        tvDistrictHeader.setGravity(Gravity.CENTER);
+        tvDistrictHeader.setText("District");
+        tvDistrictHeader.setTypeface(null, Typeface.BOLD);
+        tvDistrictHeader.setTextSize(TypedValue.COMPLEX_UNIT_PX, largeFontSize);
+
+        TextView tvConfirmedHeader = new TextView(this);
+        tvConfirmedHeader.setLayoutParams(new TableLayout.LayoutParams(0,
+                TableLayout.LayoutParams.WRAP_CONTENT, 1.0f));
+        tvConfirmedHeader.setTextSize(TypedValue.COMPLEX_UNIT_PX, largeFontSize);
+        tvConfirmedHeader.setTypeface(null, Typeface.BOLD);
+        tvConfirmedHeader.setGravity(Gravity.CENTER);
+        tvConfirmedHeader.setPadding(5, 15, 0, 15);
+        tvConfirmedHeader.setBackgroundColor(Color.parseColor("#f8f8f8"));
+        //tvConfirmed.setTextColor(Color.parseColor("#f8f8f8"));
+        tvConfirmedHeader.setText("Confirmed");
+
+        TableRow trHeader = new TableRow(this);
+        TableLayout.LayoutParams tlHeaderParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
+                TableLayout.LayoutParams.WRAP_CONTENT);
+        tlHeaderParams.setMargins(5, 5, 5, 5);
+
+        llHeader.addView(tvDistrictHeader);
+        llHeader.addView(tvConfirmedHeader);
+
+        trHeader.addView(llHeader);
+
+        tableLayout.addView(trHeader, tlHeaderParams);
+
+
+        for (String key : districtData.getDistrictDataMap().keySet()) {
+            String confirmed = districtData.getDistrictDataMap().get(key).getConfirmed();
+
+            LinearLayout ll = new LinearLayout(this);
+            LinearLayout.LayoutParams llParams = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT
+            );
+            ll.setOrientation(LinearLayout.HORIZONTAL);
+            ll.setWeightSum(2);
+
+            TextView tvDistrict = new TextView(this);
+            tvDistrict.setLayoutParams(new TableLayout.LayoutParams(0,
+                    TableLayout.LayoutParams.WRAP_CONTENT, 1.0f));
+            tvDistrict.setGravity(Gravity.LEFT);
+            tvDistrict.setPadding(5, 15, 0, 15);
+            tvDistrict.setGravity(Gravity.CENTER);
+            tvDistrict.setText(key);
+            tvDistrict.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallFontSize);
+
+            TextView tvConfirmed = new TextView(this);
+            tvConfirmed.setLayoutParams(new TableLayout.LayoutParams(0,
+                    TableLayout.LayoutParams.WRAP_CONTENT, 1.0f));
+            tvConfirmed.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallFontSize);
+            tvConfirmed.setGravity(Gravity.CENTER);
+            tvConfirmed.setPadding(5, 15, 0, 15);
+            tvConfirmed.setBackgroundColor(Color.parseColor("#f8f8f8"));
+            tvConfirmed.setText(confirmed);
+
+
+            TableRow tr = new TableRow(this);
+            TableLayout.LayoutParams tlParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
+                    TableLayout.LayoutParams.WRAP_CONTENT);
+            tlParams.setMargins(5, 5, 5, 5);
+
+            ll.addView(tvDistrict);
+            ll.addView(tvConfirmed);
+
+            tr.addView(ll);
+            //tr.setLayoutParams(tlParams);
+            //tr.addView(tvDistrict);
+            //tr.addView(tvConfirmed);
+
+            tableLayout.addView(tr, tlParams);
+
+        }
+
+/*        TextView tvDistrictHeader = view.findViewById(R.id.tvDistrictHeader);
+        tvDistrictHeader.setText("District" + "                                " + "Confirmed" + "\n");
+
+        TextView tvDetails = view.findViewById(R.id.tvDetails);
+        tvDetails.setText("");
+        for (String key : districtData.getDistrictDataMap().keySet()) {
+
+            *//*for (int i = key.length(); i < 40; i++) {
+                tvDetails.append(" ");
+            }*//*
+            StringBuffer confirmed = new StringBuffer(100);
+            confirmed.append(key);
+
+            Log.d(TAG, "showMaterialDialog1: ----------> " + (60 - confirmed.length()));
+            for (int i = confirmed.length(); i < 60; i++) {
+                Log.d(TAG, "showMaterialDialog2: " + i);
+                confirmed.append("i");
+            }
+            //confirmed.append(districtData.getDistrictDataMap().get(key).getConfirmed() + "\n", 50, 50 + districtData.getDistrictDataMap().get(key).getConfirmed().length() + 1);
+            confirmed.append(districtData.getDistrictDataMap().get(key).getConfirmed());
+            confirmed.append("\n");
+            tvDetails.append(confirmed.toString());
+        }*/
+        /*LinearLayout llDetails = view.findViewById(R.id.llDetails);
+
+        for (String key : districtData.getDistrictDataMap().keySet()) {
+            TextView tvDistrict =
+        }*/
+
+        alertDialogBuilder.setView(view);
+        alertDialogBuilder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     @Override

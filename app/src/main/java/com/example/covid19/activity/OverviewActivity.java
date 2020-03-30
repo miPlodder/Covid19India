@@ -1,58 +1,72 @@
 package com.example.covid19.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.covid19.R;
-import com.example.covid19.model.dataJson.DataJSON;
-import com.example.covid19.service.Covid19Client;
-import com.example.covid19.service.Covid19Service;
-import com.example.covid19.utility.JsonParserUtility;
-import com.google.gson.JsonObject;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.example.covid19.presenter.OverviewPresenter;
 
 public class OverviewActivity extends AppCompatActivity {
 
     public final String TAG = getClass().getSimpleName();
+    private OverviewPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
 
-        Covid19Service service = Covid19Client.getCovid19Client().create(Covid19Service.class);
+        presenter = new OverviewPresenter(this);
+        presenter.getDataJSON();
+    }
 
-        Call<DataJSON> response = service.getDataJSON();
-        response.enqueue(new Callback<DataJSON>() {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.overview_menu, menu);
+        return true;
+    }
 
-            @Override
-            public void onResponse(Call<DataJSON> call, Response<DataJSON> response) {
-                Log.d(TAG, "onResponse: " + response.body().toString());
-            }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item_donate:
+                this.showPaymentAppsOption();
+                break;
+            case R.id.item_chat_with_us:
+                this.showCoronaHelpDesk();
+                break;
+            case R.id.item_links:
+                this.showLinksActivity();
+                break;
+            case R.id.item_contribute:
+                Log.d(TAG, "onOptionsItemSelected: " + "item_contribute");
+                break;
 
-            @Override
-            public void onFailure(Call<DataJSON> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.getMessage());
-            }
-        });
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
-        Call<JsonObject> response2 = service.getStateDistrictWiseJSON();
-        response2.enqueue(new Callback<JsonObject>() {
+    public void showPaymentAppsOption() {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+        browserIntent.setData(Uri.parse("https://gpay.app.goo.gl/38NkZb"));
+        startActivity(browserIntent);
+    }
 
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.d(TAG, "onResponse: " + JsonParserUtility.parseStateDistrictWiseResponse(response.body()));
-            }
+    public void showCoronaHelpDesk() {
+        Uri uri = Uri.parse("smsto:" + "9013151515");
+        Intent whatsappIntent = new Intent(Intent.ACTION_SENDTO, uri);
+        whatsappIntent.setPackage("com.whatsapp");
+        startActivity(Intent.createChooser(whatsappIntent, ""));
+    }
 
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.getMessage());
-            }
-        });
+    public void showLinksActivity() {
+        Intent linkIntent = new Intent(this, LinksActivity.class);
+        startActivity(linkIntent);
     }
 }

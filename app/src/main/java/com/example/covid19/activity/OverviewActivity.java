@@ -1,9 +1,12 @@
 package com.example.covid19.activity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +34,8 @@ import com.example.covid19.model.dataJson.DataJSON;
 import com.example.covid19.model.stateDistrictWiseJson.DistrictData;
 import com.example.covid19.model.stateDistrictWiseJson.StateDistrictWiseJson;
 import com.example.covid19.presenter.OverviewPresenter;
+
+import java.net.InetAddress;
 
 public class OverviewActivity extends AppCompatActivity {
 
@@ -49,8 +55,13 @@ public class OverviewActivity extends AppCompatActivity {
         tableLayout = findViewById(R.id.tableLayout);
 
         presenter = new OverviewPresenter(this);
+
         presenter.getDataJSON();
         presenter.getStateDistrictWiseJSON();
+
+        if (!isInternetAvailable()) {
+            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -63,8 +74,16 @@ public class OverviewActivity extends AppCompatActivity {
         this.stateDistrictWiseJson = stateDistrictWiseJson;
     }
 
+    public void setDashboard(DataJSON dataJSON) {
+        ((TextView) findViewById(R.id.tvConfirmed)).setText(dataJSON.getStatewiseList().get(0).getConfirmed());
+        ((TextView) findViewById(R.id.tvActive)).setText(dataJSON.getStatewiseList().get(0).getActive());
+        ((TextView) findViewById(R.id.tvDeaths)).setText(dataJSON.getStatewiseList().get(0).getDeaths());
+        ((TextView) findViewById(R.id.tvRecovered)).setText(dataJSON.getStatewiseList().get(0).getRecovered());
+    }
+
     public void setDataToAdapter(DataJSON dataJSON) {
         this.dataJSON = dataJSON;
+        setDashboard(this.dataJSON);
         covidDetailsTableDataSource = new CovidDetailsTableDataSourceImpl(this.dataJSON);
         tableAdapter = new CovidDetailsAdapter(this, covidDetailsTableDataSource);
         tableAdapter.setOnItemClickListener(new OnItemClickListener() {
@@ -275,4 +294,22 @@ public class OverviewActivity extends AppCompatActivity {
         Intent linkIntent = new Intent(this, LinksActivity.class);
         startActivity(linkIntent);
     }
+
+    public boolean isInternetAvailable() {
+        final ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (connMgr != null) {
+            NetworkInfo activeNetworkInfo = connMgr.getActiveNetworkInfo();
+
+            if (activeNetworkInfo != null) { // connected to the internet
+                // connected to the mobile provider's data plan
+                if (activeNetworkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+                    // connected to wifi
+                    return true;
+                } else return activeNetworkInfo.getType() == ConnectivityManager.TYPE_MOBILE;
+            }
+        }
+        return false;
+    }
+
 }

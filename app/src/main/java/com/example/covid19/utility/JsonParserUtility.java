@@ -19,7 +19,7 @@ public class JsonParserUtility {
         for (String state : jsonObject.keySet()) {
             JsonObject districtJsonObject = jsonObject.getAsJsonObject(state).getAsJsonObject(DISTRICT_DATA);
             DistrictData districtData = new DistrictData();
-            for (String district: districtJsonObject.keySet()) {
+            for (String district : districtJsonObject.keySet()) {
                 JsonObject districtDataJsonObject = districtJsonObject.getAsJsonObject(district);
                 Cases cases = (new Gson()).fromJson(districtDataJsonObject, Cases.class);
                 districtData.putToDistrictDataMap(district, cases);
@@ -28,4 +28,5 @@ public class JsonParserUtility {
         }
         return stateDistrictWiseJson;
     }
+
 }

@@ -31,6 +31,7 @@ public class OverviewPresenter {
 
             @Override
             public void onResponse(Call<DataJSON> call, Response<DataJSON> response) {
+                activity.setDataToAdapter(response.body());
                 Log.d(TAG, "onResponse: " + response.body().toString());
             }
 

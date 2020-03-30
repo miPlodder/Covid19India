@@ -1,6 +1,5 @@
 package com.example.covid19.activity;
 
-import android.app.ActionBar;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,8 +30,6 @@ import com.example.covid19.model.dataJson.DataJSON;
 import com.example.covid19.model.stateDistrictWiseJson.DistrictData;
 import com.example.covid19.model.stateDistrictWiseJson.StateDistrictWiseJson;
 import com.example.covid19.presenter.OverviewPresenter;
-
-import org.w3c.dom.Text;
 
 public class OverviewActivity extends AppCompatActivity {
 

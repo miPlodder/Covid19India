@@ -1,5 +1,7 @@
 package com.example.covid19.model.dataJson;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Statewise {
 
     private String active;
@@ -8,6 +10,7 @@ public class Statewise {
 
     private String deaths;
 
+    @SerializedName("delta")
     private Delta delta;
 
     private String lastupdatedtime;

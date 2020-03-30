@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.GradientDrawable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.graphics.ColorUtils;
 
 import com.cleveroad.adaptivetablelayout.LinkedAdaptiveTableAdapter;
 import com.cleveroad.adaptivetablelayout.ViewHolderImpl;
 import com.example.covid19.R;
+import com.example.covid19.model.dataJson.Delta;
 
 public class CovidDetailsAdapter extends LinkedAdaptiveTableAdapter<ViewHolderImpl> {
 
@@ -31,6 +34,7 @@ public class CovidDetailsAdapter extends LinkedAdaptiveTableAdapter<ViewHolderIm
     private final int mRowHeight;
     private final int mHeaderHeight;
     private final int mHeaderWidth;
+    private final String TAG = CovidDetailsAdapter.class.getClass().getSimpleName();
 
     public CovidDetailsAdapter(Context context, CovidDetailsTableDataSource<String, String, String, String> mCovidDetailsTableDataSource) {
         mcontext = context;
@@ -91,7 +95,35 @@ public class CovidDetailsAdapter extends LinkedAdaptiveTableAdapter<ViewHolderIm
         itemData = itemData.trim();
         vh.tvText.setVisibility(View.VISIBLE);
         vh.ivImage.setVisibility(View.VISIBLE);
+
+        Delta delta = ((CovidDetailsTableDataSourceImpl) mCovidDetailsTableDataSource).getJson().getStatewiseList().get(row).getDelta();
+
+        Log.d(TAG, "onBindViewHolder: " + delta.toString());
+        switch (column) {
+            case 1:
+                setFlag(delta.getConfirmed(), vh);
+                break;
+            case 2:
+                setFlag(delta.getActive(), vh);
+                break;
+            case 3:
+                setFlag(delta.getDeaths(), vh);
+                break;
+            case 4:
+                setFlag(delta.getRecovered(), vh);
+                break;
+        }
         vh.tvText.setText(itemData);
+    }
+
+    private void setFlag(int count, CovidDetailsItemViewHolder vh) {
+        if (count > 0) {
+            vh.ivImage.setImageDrawable(mcontext.getResources().getDrawable(R.drawable.trending_up_red_18dp));
+        } else if (count < 0) {
+            vh.ivImage.setImageDrawable(mcontext.getResources().getDrawable(R.drawable.trending_down_green_18dp));
+        } else {
+            vh.ivImage.setImageDrawable(mcontext.getResources().getDrawable(R.drawable.trending_flat_blue_18dp));
+        }
     }
 
     // CovidDetailsHeaderColumnViewHolder
@@ -99,14 +131,14 @@ public class CovidDetailsAdapter extends LinkedAdaptiveTableAdapter<ViewHolderIm
     public void onBindHeaderColumnViewHolder(@NonNull ViewHolderImpl viewHolder, int column) {
         CovidDetailsHeaderColumnViewHolder vh = (CovidDetailsHeaderColumnViewHolder) viewHolder;
 
-        int color = COLORS[column % COLORS.length];
+        //int color = COLORS[column % COLORS.length];
         vh.tvText.setText(mCovidDetailsTableDataSource.getColumnHeaderData(column));  // skip left top header
-        GradientDrawable gd = new GradientDrawable(
+        /*GradientDrawable gd = new GradientDrawable(
                 mIsRtl ? GradientDrawable.Orientation.RIGHT_LEFT : GradientDrawable.Orientation.LEFT_RIGHT,
                 new int[]{ColorUtils.setAlphaComponent(color, 50), 0x00000000});
         gd.setCornerRadius(0f);
         vh.vGradient.setBackground(gd);
-        vh.vLine.setBackgroundColor(color);
+        vh.vLine.setBackgroundColor(color);*/
 
     }
 

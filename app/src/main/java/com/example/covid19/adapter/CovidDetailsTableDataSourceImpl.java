@@ -52,4 +52,8 @@ public class CovidDetailsTableDataSourceImpl implements CovidDetailsTableDataSou
         }
         return null;
     }
+
+    public DataJSON getJson() {
+        return json;
+    }
 }

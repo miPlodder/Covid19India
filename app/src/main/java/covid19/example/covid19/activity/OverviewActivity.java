@@ -158,7 +158,7 @@ public class OverviewActivity extends AppCompatActivity {
 
     private void showMaterialDialog(DistrictData districtData) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        View view = getLayoutInflater().inflate(R.layout.dialog_districy_details, null);
+        View view = getLayoutInflater().inflate(R.layout.dialog_district_details, null);
 
         TableLayout tableLayout = view.findViewById(R.id.tlDistricts);
         tableLayout.removeAllViews();

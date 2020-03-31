@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.OverviewActivity">
+    tools:context="covid19.example.covid19.activity.OverviewActivity">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

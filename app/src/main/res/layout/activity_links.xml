@@ -7,7 +7,7 @@
     android:layout_margin="12dp"
     android:orientation="vertical"
     android:scrollbars="vertical"
-    tools:context=".activity.LinksActivity">
+    tools:context="covid19.example.covid19.activity.LinksActivity">
 
     <TextView
         android:layout_width="match_parent"

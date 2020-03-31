@@ -12,9 +12,9 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MessageActivity" />
-        <activity android:name=".activity.LinksActivity" />
-        <activity android:name=".activity.OverviewActivity">
+        <activity android:name="covid19.example.covid19.activity.MessageActivity" />
+        <activity android:name="covid19.example.covid19.activity.LinksActivity" />
+        <activity android:name="covid19.example.covid19.activity.OverviewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

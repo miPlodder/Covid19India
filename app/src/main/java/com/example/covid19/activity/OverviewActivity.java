@@ -51,6 +51,10 @@ public class OverviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Fight Corona");
+        }
+
         tableLayout = findViewById(R.id.tableLayout);
 
         presenter = new OverviewPresenter(this);

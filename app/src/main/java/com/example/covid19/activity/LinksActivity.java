@@ -1,12 +1,14 @@
 package com.example.covid19.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.covid19.R;
 
@@ -18,10 +20,17 @@ public class LinksActivity extends AppCompatActivity {
     private TextView tvCdcLink;
     private TextView tvGlobalTracker;
 
+    public static final String TAG = LinksActivity.class.getClass().getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_links);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Important Links");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         tvHelplineNumber = findViewById(R.id.tvHelplineNumbers);
         tvHelplineNumber.setOnClickListener(getOnClickListener("https://www.mohfw.gov.in/coronvavirushelplinenumber.pdf"));
@@ -46,4 +55,13 @@ public class LinksActivity extends AppCompatActivity {
         };
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

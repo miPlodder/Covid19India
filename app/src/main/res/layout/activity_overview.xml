@@ -35,6 +35,11 @@
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#FF0000" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -43,7 +48,7 @@
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Confirmed"
                     android:textStyle="bold" />
@@ -51,8 +56,16 @@
                 <TextView
                     android:id="@+id/tvConfirmed"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right" />
+
+                <ImageView
+                    android:id="@+id/ivImageConfirmed"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_weight="1"
+                    android:gravity="left" />
 
             </LinearLayout>
 
@@ -63,7 +76,7 @@
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Active"
                     android:textStyle="bold" />
@@ -71,28 +84,17 @@
                 <TextView
                     android:id="@+id/tvActive"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Deaths"
-                    android:textStyle="bold" />
+                    android:gravity="right" />
 
-                <TextView
-                    android:id="@+id/tvDeaths"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/ivImageActive"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_weight="1"
+                    android:gravity="left" />
 
             </LinearLayout>
 
@@ -103,7 +105,7 @@
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Recovered"
                     android:textStyle="bold" />
@@ -111,12 +113,48 @@
                 <TextView
                     android:id="@+id/tvRecovered"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right" />
+
+
+                <ImageView
+                    android:id="@+id/ivImageRecovered"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_weight="1"
+                    android:gravity="left" />
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Deaths"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvDeaths"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right" />
+
+
+                <ImageView
+                    android:id="@+id/ivImageDeaths"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="left"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
         </LinearLayout>
 
 

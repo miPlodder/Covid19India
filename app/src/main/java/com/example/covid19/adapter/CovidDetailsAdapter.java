@@ -2,18 +2,17 @@ package com.example.covid19.adapter;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.drawable.GradientDrawable;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.core.graphics.ColorUtils;
 
 import com.cleveroad.adaptivetablelayout.LinkedAdaptiveTableAdapter;
 import com.cleveroad.adaptivetablelayout.ViewHolderImpl;
@@ -72,7 +71,7 @@ public class CovidDetailsAdapter extends LinkedAdaptiveTableAdapter<ViewHolderIm
     @NonNull
     @Override
     public ViewHolderImpl onCreateRowHeaderViewHolder(@NonNull ViewGroup parent) {
-        return new CovidDetailsHeaderRowViewHolder(View.inflate(mcontext, R.layout.item_header_column, null));
+        return new CovidDetailsHeaderRowViewHolder(View.inflate(mcontext, R.layout.item_header_row, null));
     }
 
     @NonNull
@@ -98,18 +97,19 @@ public class CovidDetailsAdapter extends LinkedAdaptiveTableAdapter<ViewHolderIm
 
         Delta delta = ((CovidDetailsTableDataSourceImpl) mCovidDetailsTableDataSource).getJson().getStatewiseList().get(row).getDelta();
 
-        Log.d(TAG, "onBindViewHolder: " + delta.toString());
         switch (column) {
             case 1:
                 setFlag(delta.getConfirmed(), vh);
                 break;
             case 2:
+                vh.llItem.setBackgroundColor(Color.parseColor("#f8f8f8"));
                 setFlag(delta.getActive(), vh);
                 break;
             case 3:
                 setFlag(delta.getDeaths(), vh);
                 break;
             case 4:
+                vh.llItem.setBackgroundColor(Color.parseColor("#f8f8f8"));
                 setFlag(delta.getRecovered(), vh);
                 break;
         }
@@ -119,6 +119,7 @@ public class CovidDetailsAdapter extends LinkedAdaptiveTableAdapter<ViewHolderIm
     private void setFlag(int count, CovidDetailsItemViewHolder vh) {
         if (count > 0) {
             vh.ivImage.setImageDrawable(mcontext.getResources().getDrawable(R.drawable.trending_up_red_18dp));
+            vh.tvText.setTypeface(null, Typeface.BOLD);
         } else if (count < 0) {
             vh.ivImage.setImageDrawable(mcontext.getResources().getDrawable(R.drawable.trending_down_green_18dp));
         } else {
@@ -131,15 +132,10 @@ public class CovidDetailsAdapter extends LinkedAdaptiveTableAdapter<ViewHolderIm
     public void onBindHeaderColumnViewHolder(@NonNull ViewHolderImpl viewHolder, int column) {
         CovidDetailsHeaderColumnViewHolder vh = (CovidDetailsHeaderColumnViewHolder) viewHolder;
 
-        //int color = COLORS[column % COLORS.length];
         vh.tvText.setText(mCovidDetailsTableDataSource.getColumnHeaderData(column));  // skip left top header
-        /*GradientDrawable gd = new GradientDrawable(
-                mIsRtl ? GradientDrawable.Orientation.RIGHT_LEFT : GradientDrawable.Orientation.LEFT_RIGHT,
-                new int[]{ColorUtils.setAlphaComponent(color, 50), 0x00000000});
-        gd.setCornerRadius(0f);
-        vh.vGradient.setBackground(gd);
-        vh.vLine.setBackgroundColor(color);*/
-
+        if (column == 2 || column == 4) {
+            vh.llHeaderColumn.setBackgroundColor(Color.parseColor("#f8f8f8"));
+        }
     }
 
     // CovidDetailsHeaderRowViewHolder
@@ -181,24 +177,24 @@ public class CovidDetailsAdapter extends LinkedAdaptiveTableAdapter<ViewHolderIm
     private static class CovidDetailsItemViewHolder extends ViewHolderImpl {
         TextView tvText;
         ImageView ivImage;
+        LinearLayout llItem;
 
         private CovidDetailsItemViewHolder(@NonNull View itemView) {
             super(itemView);
             tvText = itemView.findViewById(R.id.tvText);
             ivImage = itemView.findViewById(R.id.ivImage);
+            llItem = itemView.findViewById(R.id.llItem);
         }
     }
 
     private static class CovidDetailsHeaderColumnViewHolder extends ViewHolderImpl {
         TextView tvText;
-        View vGradient;
-        View vLine;
+        LinearLayout llHeaderColumn;
 
         private CovidDetailsHeaderColumnViewHolder(@NonNull View itemView) {
             super(itemView);
             tvText = itemView.findViewById(R.id.tvText);
-            vGradient = itemView.findViewById(R.id.vGradient);
-            vLine = itemView.findViewById(R.id.vLine);
+            llHeaderColumn = itemView.findViewById(R.id.llHeaderColumn);
         }
     }
 

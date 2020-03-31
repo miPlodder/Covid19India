@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -34,8 +35,6 @@ import com.example.covid19.model.dataJson.DataJSON;
 import com.example.covid19.model.stateDistrictWiseJson.DistrictData;
 import com.example.covid19.model.stateDistrictWiseJson.StateDistrictWiseJson;
 import com.example.covid19.presenter.OverviewPresenter;
-
-import java.net.InetAddress;
 
 public class OverviewActivity extends AppCompatActivity {
 
@@ -76,9 +75,23 @@ public class OverviewActivity extends AppCompatActivity {
 
     public void setDashboard(DataJSON dataJSON) {
         ((TextView) findViewById(R.id.tvConfirmed)).setText(dataJSON.getStatewiseList().get(0).getConfirmed());
+        setFlag(dataJSON.getStatewiseList().get(0).getDelta().getConfirmed(), findViewById(R.id.ivImageConfirmed));
         ((TextView) findViewById(R.id.tvActive)).setText(dataJSON.getStatewiseList().get(0).getActive());
+        setFlag(dataJSON.getStatewiseList().get(0).getDelta().getActive(), findViewById(R.id.ivImageActive));
         ((TextView) findViewById(R.id.tvDeaths)).setText(dataJSON.getStatewiseList().get(0).getDeaths());
+        setFlag(dataJSON.getStatewiseList().get(0).getDelta().getDeaths(), findViewById(R.id.ivImageDeaths));
         ((TextView) findViewById(R.id.tvRecovered)).setText(dataJSON.getStatewiseList().get(0).getRecovered());
+        setFlag(dataJSON.getStatewiseList().get(0).getDelta().getRecovered(), findViewById(R.id.ivImageRecovered));
+    }
+
+    private void setFlag(int count, ImageView ivImage) {
+        if (count > 0) {
+            ivImage.setImageDrawable(getResources().getDrawable(R.drawable.trending_up_red_18dp));
+        } else if (count < 0) {
+            ivImage.setImageDrawable(getResources().getDrawable(R.drawable.trending_down_green_18dp));
+        } else {
+            ivImage.setImageDrawable(getResources().getDrawable(R.drawable.trending_flat_blue_18dp));
+        }
     }
 
     public void setDataToAdapter(DataJSON dataJSON) {

@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import com.cleveroad.adaptivetablelayout.LinkedAdaptiveTableAdapter;
 import com.cleveroad.adaptivetablelayout.ViewHolderImpl;
 import com.example.covid19.R;
+
 import covid19.example.covid19.model.dataJson.Delta;
 
 public class CovidDetailsAdapter extends LinkedAdaptiveTableAdapter<ViewHolderImpl> {
@@ -98,6 +99,7 @@ public class CovidDetailsAdapter extends LinkedAdaptiveTableAdapter<ViewHolderIm
 
         switch (column) {
             case 1:
+                vh.llItem.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 setFlag(delta.getConfirmed(), vh);
                 break;
             case 2:
@@ -105,6 +107,7 @@ public class CovidDetailsAdapter extends LinkedAdaptiveTableAdapter<ViewHolderIm
                 setFlag(delta.getActive(), vh);
                 break;
             case 3:
+                vh.llItem.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 setFlag(delta.getDeaths(), vh);
                 break;
             case 4:

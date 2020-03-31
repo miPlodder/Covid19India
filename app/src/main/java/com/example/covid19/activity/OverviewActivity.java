@@ -9,7 +9,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
@@ -225,43 +224,10 @@ public class OverviewActivity extends AppCompatActivity {
             ll.addView(tvConfirmed);
 
             tr.addView(ll);
-            //tr.setLayoutParams(tlParams);
-            //tr.addView(tvDistrict);
-            //tr.addView(tvConfirmed);
 
             tableLayout.addView(tr, tlParams);
 
         }
-
-/*        TextView tvDistrictHeader = view.findViewById(R.id.tvDistrictHeader);
-        tvDistrictHeader.setText("District" + "                                " + "Confirmed" + "\n");
-
-        TextView tvDetails = view.findViewById(R.id.tvDetails);
-        tvDetails.setText("");
-        for (String key : districtData.getDistrictDataMap().keySet()) {
-
-            *//*for (int i = key.length(); i < 40; i++) {
-                tvDetails.append(" ");
-            }*//*
-            StringBuffer confirmed = new StringBuffer(100);
-            confirmed.append(key);
-
-            Log.d(TAG, "showMaterialDialog1: ----------> " + (60 - confirmed.length()));
-            for (int i = confirmed.length(); i < 60; i++) {
-                Log.d(TAG, "showMaterialDialog2: " + i);
-                confirmed.append("i");
-            }
-            //confirmed.append(districtData.getDistrictDataMap().get(key).getConfirmed() + "\n", 50, 50 + districtData.getDistrictDataMap().get(key).getConfirmed().length() + 1);
-            confirmed.append(districtData.getDistrictDataMap().get(key).getConfirmed());
-            confirmed.append("\n");
-            tvDetails.append(confirmed.toString());
-        }*/
-        /*LinearLayout llDetails = view.findViewById(R.id.llDetails);
-
-        for (String key : districtData.getDistrictDataMap().keySet()) {
-            TextView tvDistrict =
-        }*/
-
         alertDialogBuilder.setView(view);
         alertDialogBuilder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
             @Override
@@ -286,10 +252,9 @@ public class OverviewActivity extends AppCompatActivity {
             case R.id.item_links:
                 this.showLinksActivity();
                 break;
-            case R.id.item_contribute:
-                Log.d(TAG, "onOptionsItemSelected: " + "item_contribute");
+            case R.id.item_my_message:
+                this.showAboutMe();
                 break;
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -310,6 +275,11 @@ public class OverviewActivity extends AppCompatActivity {
     private void showLinksActivity() {
         Intent linkIntent = new Intent(this, LinksActivity.class);
         startActivity(linkIntent);
+    }
+
+    private void showAboutMe() {
+        Intent aboutIntent = new Intent(this, MessageActivity.class);
+        startActivity(aboutIntent);
     }
 
     public boolean isInternetAvailable() {

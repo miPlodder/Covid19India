@@ -14,7 +14,7 @@
         android:title="Links" />
 
     <item
-        android:id="@+id/item_contribute"
-        android:title="Contribute" />
+        android:id="@+id/item_my_message"
+        android:title="My Message" />
 
 </menu>

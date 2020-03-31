@@ -7,166 +7,203 @@
     android:orientation="vertical"
     tools:context="covid19.example.covid19.activity.OverviewActivity">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:layout_marginBottom="5dp"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="5dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="15dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Overall Covid Cases Status - India"
-                    android:textColor="#FF0000"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#FF0000" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Confirmed"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvConfirmed"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right" />
-
-                <ImageView
-                    android:id="@+id/ivImageConfirmed"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:layout_weight="1"
-                    android:gravity="left" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Active"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvActive"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right" />
-
-
-                <ImageView
-                    android:id="@+id/ivImageActive"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:layout_weight="1"
-                    android:gravity="left" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Recovered"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvRecovered"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right" />
-
-
-                <ImageView
-                    android:id="@+id/ivImageRecovered"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:layout_weight="1"
-                    android:gravity="left" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Deaths"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvDeaths"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right" />
-
-
-                <ImageView
-                    android:id="@+id/ivImageDeaths"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:layout_gravity="left"
-                    android:layout_weight="1" />
-
-            </LinearLayout>
-        </LinearLayout>
-
-
-    </androidx.cardview.widget.CardView>
-
-    <com.cleveroad.adaptivetablelayout.AdaptiveTableLayout
-        android:id="@+id/tableLayout"
+    <LinearLayout
+        android:id="@+id/llError"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cellMargin="1dp"
-        app:dragAndDropEnabled="true"
-        app:fixedHeaders="true"
-        app:solidRowHeaders="true" />
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:weightSum="2">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center|bottom"
+            android:text="Cannot fetch the data" />
+
+        <Button
+            android:id="@+id/btnError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custom_button"
+            android:text="Try Again"
+            android:textColor="#FA71CD" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_marginBottom="5dp"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Overall Covid Cases Status - India"
+                        android:textColor="#FF0000"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="#FF0000" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Confirmed"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvConfirmed"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right" />
+
+                    <ImageView
+                        android:id="@+id/ivImageConfirmed"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_weight="1"
+                        android:gravity="left" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Active"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvActive"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right" />
+
+
+                    <ImageView
+                        android:id="@+id/ivImageActive"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_weight="1"
+                        android:gravity="left" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Recovered"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvRecovered"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right" />
+
+
+                    <ImageView
+                        android:id="@+id/ivImageRecovered"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_weight="1"
+                        android:gravity="left" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Deaths"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvDeaths"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right" />
+
+
+                    <ImageView
+                        android:id="@+id/ivImageDeaths"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_gravity="left"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <com.cleveroad.adaptivetablelayout.AdaptiveTableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cellMargin="1dp"
+            app:dragAndDropEnabled="true"
+            app:fixedHeaders="true"
+            app:solidRowHeaders="true" />
+
+    </LinearLayout>
+
 
 </LinearLayout>

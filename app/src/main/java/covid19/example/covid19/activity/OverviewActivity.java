@@ -40,6 +40,8 @@ public class OverviewActivity extends AppCompatActivity {
 
     public final String TAG = getClass().getSimpleName();
     private AdaptiveTableLayout tableLayout;
+    private LinearLayout llError;
+    private LinearLayout llContent;
     private CovidDetailsAdapter tableAdapter;
     private OverviewPresenter presenter;
     private CovidDetailsTableDataSourceImpl covidDetailsTableDataSource;
@@ -56,11 +58,20 @@ public class OverviewActivity extends AppCompatActivity {
         }
 
         tableLayout = findViewById(R.id.tableLayout);
+        llError = findViewById(R.id.llError);
+        llContent = findViewById(R.id.llContent);
 
         presenter = new OverviewPresenter(this);
 
         presenter.getDataJSON();
-        presenter.getStateDistrictWiseJSON();
+
+        findViewById(R.id.btnError).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.getDataJSON();
+                presenter.getStateDistrictWiseJSON();
+            }
+        });
 
         if (!isInternetAvailable()) {
             Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG).show();
@@ -101,6 +112,7 @@ public class OverviewActivity extends AppCompatActivity {
     public void setDataToAdapter(DataJSON dataJSON) {
         this.dataJSON = dataJSON;
         setDashboard(this.dataJSON);
+        showContent();
         covidDetailsTableDataSource = new CovidDetailsTableDataSourceImpl(this.dataJSON);
         tableAdapter = new CovidDetailsAdapter(this, covidDetailsTableDataSource);
         tableAdapter.setOnItemClickListener(new OnItemClickListener() {
@@ -126,6 +138,17 @@ public class OverviewActivity extends AppCompatActivity {
             }
         });
         tableLayout.setAdapter(tableAdapter);
+    }
+
+    public void showContent() {
+        llContent.setVisibility(View.VISIBLE);
+        llError.setVisibility(View.GONE);
+    }
+
+    public void showError() {
+        Toast.makeText(this, "Failed to fetch data", Toast.LENGTH_LONG).show();
+        llContent.setVisibility(View.GONE);
+        llError.setVisibility(View.VISIBLE);
     }
 
     @Override

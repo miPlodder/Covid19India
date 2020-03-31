@@ -8,6 +8,7 @@ import covid19.example.covid19.model.stateDistrictWiseJson.StateDistrictWiseJson
 import covid19.example.covid19.service.Covid19Client;
 import covid19.example.covid19.service.Covid19Service;
 import covid19.example.covid19.utility.JsonParserUtility;
+
 import com.google.gson.JsonObject;
 
 import retrofit2.Call;
@@ -38,11 +39,13 @@ public class OverviewPresenter {
                 public void onResponse(Call<DataJSON> call, Response<DataJSON> response) {
                     dataJSON = response.body();
                     activity.setDataToAdapter(dataJSON);
+                    getStateDistrictWiseJSON();
                     Log.d(TAG, "onResponse: " + dataJSON.getStatewiseList().toString());
                 }
 
                 @Override
                 public void onFailure(Call<DataJSON> call, Throwable t) {
+                    activity.showError();
                     Log.d(TAG, "onFailure: " + t.getMessage());
                 }
             });
@@ -64,6 +67,7 @@ public class OverviewPresenter {
                 @Override
                 public void onFailure(Call<JsonObject> call, Throwable t) {
                     Log.d(TAG, "onFailure: " + t.getMessage());
+                    activity.showError();
                 }
             });
         }

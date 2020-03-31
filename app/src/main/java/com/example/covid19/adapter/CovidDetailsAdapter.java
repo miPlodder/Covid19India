@@ -119,7 +119,7 @@ public class CovidDetailsAdapter extends LinkedAdaptiveTableAdapter<ViewHolderIm
     private void setFlag(int count, CovidDetailsItemViewHolder vh) {
         if (count > 0) {
             vh.ivImage.setImageDrawable(mcontext.getResources().getDrawable(R.drawable.trending_up_red_18dp));
-            vh.tvText.setTypeface(null, Typeface.BOLD);
+            //vh.tvText.setTypeface(null, Typeface.BOLD);
         } else if (count < 0) {
             vh.ivImage.setImageDrawable(mcontext.getResources().getDrawable(R.drawable.trending_down_green_18dp));
         } else {

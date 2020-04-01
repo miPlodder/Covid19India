@@ -26,7 +26,7 @@ public class MessageActivity extends AppCompatActivity {
                 "\n" +
                 "Let us all unite as one nation.\n" +
                 "\n" +
-                "I have trigger the chain by following the lockdown properly.\n" +
+                "I have triggered the chain by following the lockdown properly.\n" +
                 "\n" +
                 "Now, it's your turn to continue the chain.\n" +
                 "\n");

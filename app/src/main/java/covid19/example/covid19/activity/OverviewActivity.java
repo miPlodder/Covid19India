@@ -97,7 +97,7 @@ public class OverviewActivity extends AppCompatActivity {
         Statewise overallInformation = null;
         // proper check
         for (Statewise item : statewiseList) {
-            if (item.getState() == "Total") {
+            if (item.getState().equals("Total")) {
                 overallInformation = item;
                 break;
             }

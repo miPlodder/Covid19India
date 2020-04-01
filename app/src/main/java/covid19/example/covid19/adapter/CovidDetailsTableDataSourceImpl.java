@@ -1,14 +1,25 @@
 package covid19.example.covid19.adapter;
 
+import android.util.Log;
+
 import covid19.example.covid19.model.dataJson.DataJSON;
+import covid19.example.covid19.model.dataJson.Statewise;
 
 public class CovidDetailsTableDataSourceImpl implements CovidDetailsTableDataSource<String, String, String, String> {
 
     private DataJSON json;
+    public static final String TAG = CovidDetailsTableDataSourceImpl.class.getClass().getSimpleName();
     private String[] columns = {"State", "Confirmed", "Active", "Deaths", "Recovered"};
 
     public CovidDetailsTableDataSourceImpl(DataJSON json) {
         this.json = json;
+        for (int i = 0; i < json.getStatewiseList().size(); i++) {
+            if (json.getStatewiseList().get(i).getState().equals("Total")) {
+                json.getStatewiseList().remove(i);
+            }
+        }
+        json.getStatewiseList().add(0, new Statewise());
+
     }
 
     @Override

@@ -194,12 +194,18 @@
 
         </androidx.cardview.widget.CardView>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Tap on the State for District-related information" />
+
         <com.cleveroad.adaptivetablelayout.AdaptiveTableLayout
             android:id="@+id/tableLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:cellMargin="1dp"
-            app:dragAndDropEnabled="true"
+            app:dragAndDropEnabled="false"
             app:fixedHeaders="true"
             app:solidRowHeaders="true" />
 

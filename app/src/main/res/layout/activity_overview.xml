@@ -78,6 +78,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:weightSum="4"
                     android:orientation="horizontal">
 
                     <TextView
@@ -91,7 +92,7 @@
                         android:id="@+id/tvConfirmed"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:gravity="right" />
 
                     <ImageView
@@ -104,6 +105,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_weight="4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -119,7 +121,7 @@
                         android:id="@+id/tvActive"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:gravity="right" />
 
 
@@ -133,6 +135,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:weightSum="4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -148,7 +151,7 @@
                         android:id="@+id/tvRecovered"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:gravity="right" />
 
 
@@ -162,6 +165,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:weightSum="4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -177,7 +181,7 @@
                         android:id="@+id/tvDeaths"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:gravity="right" />
 
 

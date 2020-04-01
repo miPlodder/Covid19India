@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
@@ -106,13 +107,20 @@ public class OverviewActivity extends AppCompatActivity {
             overallInformation = statewiseList.get(0);
         }
 
-        ((TextView) findViewById(R.id.tvConfirmed)).setText(overallInformation.getConfirmed());
+        String confirmed = "<b>" + overallInformation.getConfirmed() + "</b> [" + overallInformation.getDelta().getConfirmed() + "]";
+        ((TextView) findViewById(R.id.tvConfirmed)).setText(Html.fromHtml(confirmed));
         setFlag(overallInformation.getDelta().getConfirmed(), findViewById(R.id.ivImageConfirmed));
-        ((TextView) findViewById(R.id.tvActive)).setText(overallInformation.getActive());
+
+        String active = "<b>" + overallInformation.getActive() + "</b> [" + overallInformation.getDelta().getActive() + "]";
+        ((TextView) findViewById(R.id.tvActive)).setText(Html.fromHtml(active));
         setFlag(overallInformation.getDelta().getActive(), findViewById(R.id.ivImageActive));
-        ((TextView) findViewById(R.id.tvDeaths)).setText(overallInformation.getDeaths());
+
+        String deaths = "<b>" + overallInformation.getDeaths() + "</b> [" + overallInformation.getDelta().getDeaths() + "]";
+        ((TextView) findViewById(R.id.tvDeaths)).setText(Html.fromHtml(deaths));
         setFlag(overallInformation.getDelta().getDeaths(), findViewById(R.id.ivImageDeaths));
-        ((TextView) findViewById(R.id.tvRecovered)).setText(overallInformation.getRecovered());
+
+        String recovered = "<b>" + overallInformation.getRecovered() + "</b> [" + overallInformation.getDelta().getRecovered() + "]";
+        ((TextView) findViewById(R.id.tvRecovered)).setText(Html.fromHtml(recovered));
         setFlag(overallInformation.getDelta().getRecovered(), findViewById(R.id.ivImageRecovered));
     }
 

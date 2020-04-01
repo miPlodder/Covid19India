@@ -13,12 +13,18 @@ public class CovidDetailsTableDataSourceImpl implements CovidDetailsTableDataSou
 
     public CovidDetailsTableDataSourceImpl(DataJSON json) {
         this.json = json;
+        boolean insideIf = false;
         for (int i = 0; i < json.getStatewiseList().size(); i++) {
             if (json.getStatewiseList().get(i).getState().equals("Total")) {
+                insideIf = true;
                 json.getStatewiseList().remove(i);
+                break;
             }
         }
-        json.getStatewiseList().add(0, new Statewise());
+        if (insideIf) {
+            json.getStatewiseList().add(0, new Statewise());
+        }
+
 
     }
 

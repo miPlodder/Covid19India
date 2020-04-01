@@ -32,7 +32,7 @@ public class LinksActivity extends AppCompatActivity {
         }
 
         tvHelplineNumber = findViewById(R.id.tvHelplineNumbers);
-        tvHelplineNumber.setOnClickListener(getOnClickListener("https://www.mohfw.gov.in/coronvavirushelplinenumber.pdf"));
+        tvHelplineNumber.setOnClickListener(getOnClickListener("https://www.mohfw.gov.in/pdf/coronvavirushelplinenumber.pdf"));
         tvMohfwSite = findViewById(R.id.tvMohfwSite);
         tvMohfwSite.setOnClickListener(getOnClickListener("https://www.mohfw.gov.in/"));
         tvWhoSite = findViewById(R.id.tvWhoSite);

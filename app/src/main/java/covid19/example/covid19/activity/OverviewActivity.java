@@ -29,9 +29,12 @@ import com.cleveroad.adaptivetablelayout.AdaptiveTableLayout;
 import com.cleveroad.adaptivetablelayout.OnItemClickListener;
 import com.example.covid19.R;
 
+import java.util.List;
+
 import covid19.example.covid19.adapter.CovidDetailsAdapter;
 import covid19.example.covid19.adapter.CovidDetailsTableDataSourceImpl;
 import covid19.example.covid19.model.dataJson.DataJSON;
+import covid19.example.covid19.model.dataJson.Statewise;
 import covid19.example.covid19.model.stateDistrictWiseJson.DistrictData;
 import covid19.example.covid19.model.stateDistrictWiseJson.StateDistrictWiseJson;
 import covid19.example.covid19.presenter.OverviewPresenter;
@@ -89,14 +92,28 @@ public class OverviewActivity extends AppCompatActivity {
     }
 
     public void setDashboard(DataJSON dataJSON) {
-        ((TextView) findViewById(R.id.tvConfirmed)).setText(dataJSON.getStatewiseList().get(0).getConfirmed());
-        setFlag(dataJSON.getStatewiseList().get(0).getDelta().getConfirmed(), findViewById(R.id.ivImageConfirmed));
-        ((TextView) findViewById(R.id.tvActive)).setText(dataJSON.getStatewiseList().get(0).getActive());
-        setFlag(dataJSON.getStatewiseList().get(0).getDelta().getActive(), findViewById(R.id.ivImageActive));
-        ((TextView) findViewById(R.id.tvDeaths)).setText(dataJSON.getStatewiseList().get(0).getDeaths());
-        setFlag(dataJSON.getStatewiseList().get(0).getDelta().getDeaths(), findViewById(R.id.ivImageDeaths));
-        ((TextView) findViewById(R.id.tvRecovered)).setText(dataJSON.getStatewiseList().get(0).getRecovered());
-        setFlag(dataJSON.getStatewiseList().get(0).getDelta().getRecovered(), findViewById(R.id.ivImageRecovered));
+        List<Statewise> statewiseList = dataJSON.getStatewiseList();
+        Statewise overallInformation = null;
+        // proper check
+        for (Statewise item : statewiseList) {
+            if (item.getState() == "Total") {
+                overallInformation = item;
+                break;
+            }
+        }
+        // double check, as Api is not consistent
+        if (overallInformation == null) {
+            overallInformation = statewiseList.get(0);
+        }
+
+        ((TextView) findViewById(R.id.tvConfirmed)).setText(overallInformation.getConfirmed());
+        setFlag(overallInformation.getDelta().getConfirmed(), findViewById(R.id.ivImageConfirmed));
+        ((TextView) findViewById(R.id.tvActive)).setText(overallInformation.getActive());
+        setFlag(overallInformation.getDelta().getActive(), findViewById(R.id.ivImageActive));
+        ((TextView) findViewById(R.id.tvDeaths)).setText(overallInformation.getDeaths());
+        setFlag(overallInformation.getDelta().getDeaths(), findViewById(R.id.ivImageDeaths));
+        ((TextView) findViewById(R.id.tvRecovered)).setText(overallInformation.getRecovered());
+        setFlag(overallInformation.getDelta().getRecovered(), findViewById(R.id.ivImageRecovered));
     }
 
     private void setFlag(int count, ImageView ivImage) {

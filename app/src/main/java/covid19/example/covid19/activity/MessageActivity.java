@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.example.covid19.R;
+import com.example.covid19tracker.R;
 
 public class MessageActivity extends AppCompatActivity {
 

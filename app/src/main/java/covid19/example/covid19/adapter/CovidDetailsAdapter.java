@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 
 import com.cleveroad.adaptivetablelayout.LinkedAdaptiveTableAdapter;
 import com.cleveroad.adaptivetablelayout.ViewHolderImpl;
-import com.example.covid19.R;
+import com.example.covid19tracker.R;
 
 import covid19.example.covid19.model.dataJson.Delta;
 

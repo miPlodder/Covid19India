@@ -28,7 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.cleveroad.adaptivetablelayout.AdaptiveTableLayout;
 import com.cleveroad.adaptivetablelayout.OnItemClickListener;
-import com.example.covid19.R;
+import com.example.covid19tracker.R;
 
 import java.util.List;
 
@@ -58,7 +58,7 @@ public class OverviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_overview);
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Fight Corona");
+            getSupportActionBar().setTitle("India Covid-19 Tracker");
         }
 
         tableLayout = findViewById(R.id.tableLayout);
@@ -116,8 +116,8 @@ public class OverviewActivity extends AppCompatActivity {
         setFlag(overallInformation.getDelta().getActive(), findViewById(R.id.ivImageActive));
 
         String deaths = "<b>" + overallInformation.getDeaths() + "</b> [" + overallInformation.getDelta().getDeaths() + "]";
-        ((TextView) findViewById(R.id.tvDeaths)).setText(Html.fromHtml(deaths));
-        setFlag(overallInformation.getDelta().getDeaths(), findViewById(R.id.ivImageDeaths));
+        ((TextView) findViewById(R.id.tvDecreased)).setText(Html.fromHtml(deaths));
+        setFlag(overallInformation.getDelta().getDeaths(), findViewById(R.id.ivImageDecreased));
 
         String recovered = "<b>" + overallInformation.getRecovered() + "</b> [" + overallInformation.getDelta().getRecovered() + "]";
         ((TextView) findViewById(R.id.tvRecovered)).setText(Html.fromHtml(recovered));

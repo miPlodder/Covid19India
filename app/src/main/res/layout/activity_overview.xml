@@ -78,8 +78,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:weightSum="4"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="4">
 
                     <TextView
                         android:layout_width="0dp"
@@ -105,9 +105,9 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_weight="4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="4"
                     android:orientation="horizontal">
 
                     <TextView
@@ -135,10 +135,10 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:weightSum="4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="4">
 
                     <TextView
                         android:layout_width="0dp"
@@ -165,20 +165,20 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:weightSum="4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:weightSum="4">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Deaths"
+                        android:text="Decreased"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tvDeaths"
+                        android:id="@+id/tvDecreased"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
@@ -186,7 +186,7 @@
 
 
                     <ImageView
-                        android:id="@+id/ivImageDeaths"
+                        android:id="@+id/ivImageDecreased"
                         android:layout_width="12dp"
                         android:layout_height="12dp"
                         android:layout_gravity="left"
@@ -194,7 +194,6 @@
 
                 </LinearLayout>
             </LinearLayout>
-
 
         </androidx.cardview.widget.CardView>
 

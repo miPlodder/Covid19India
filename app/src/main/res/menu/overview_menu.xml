@@ -3,7 +3,15 @@
 
     <item
         android:id="@+id/item_donate"
-        android:title="Donate" />
+        android:title="Donate" >
+
+        <menu>
+            <item android:id="@+id/item_gpay" android:title="Google Pay"/>
+            <item android:id="@+id/item_phonepe" android:title="Phone Pe"/>
+            <item android:id="@+id/item_paytm" android:title="Paytm"/>
+        </menu>
+
+    </item>
 
     <item
         android:id="@+id/item_chat_with_us"

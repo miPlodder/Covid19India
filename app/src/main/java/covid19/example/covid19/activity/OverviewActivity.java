@@ -292,8 +292,14 @@ public class OverviewActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.item_donate:
-                this.showPaymentAppsOption();
+            case R.id.item_gpay:
+                this.showPaymentAppsOption(0);
+                break;
+            case R.id.item_phonepe:
+                this.showPaymentAppsOption(1);
+                break;
+            case R.id.item_paytm:
+                this.showPaymentAppsOption(2);
                 break;
             case R.id.item_chat_with_us:
                 this.showCoronaHelpDesk();
@@ -308,9 +314,20 @@ public class OverviewActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void showPaymentAppsOption() {
+    // 0-> gpay, 1-> phonepe, 2-> paytm
+    private void showPaymentAppsOption(int code) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW);
-        browserIntent.setData(Uri.parse("https://gpay.app.goo.gl/38NkZb"));
+        switch (code) {
+            case 0:
+                browserIntent.setData(Uri.parse("https://gpay.app.goo.gl/38NkZb"));
+                break;
+            case 1:
+                browserIntent.setData(Uri.parse("https://www.phon.pe.com/i4india/index.html"));
+                break;
+            case 2:
+                browserIntent.setData(Uri.parse("https://paytm.com/helpinghand/pm-cares-fund"));
+                break;
+        }
         startActivity(browserIntent);
     }
 
